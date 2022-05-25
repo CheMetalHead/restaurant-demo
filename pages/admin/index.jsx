@@ -1,7 +1,10 @@
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
+import Order from "../../models/Order";
+import Product from "../../models/Product";
 import styles from "../../styles/Admin.module.css";
+import dbConnect from "../../util/mongo";
 
 const Index = ({ orders, products }) => {
   const [pizzaList, setPizzaList] = useState(products);
@@ -118,8 +121,9 @@ const Index = ({ orders, products }) => {
 };
 
 export const getServerSideProps = async (ctx) => {
+  
   const myCookie = ctx.req?.cookies || "";
-
+  
   if (myCookie.token !== process.env.TOKEN) {
     return {
       redirect: {
@@ -128,14 +132,18 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
+  
+  await dbConnect()
+  let productRes = await Product.find();
+  let orderRes = await Order.find();
 
-  const productRes = await axios.get("/api/products");
-  const orderRes = await axios.get("/api/orders");
+  productRes = JSON.parse(JSON.stringify(productRes))
+  orderRes = JSON.parse(JSON.stringify(orderRes))
 
   return {
     props: {
-      orders: orderRes.data,
-      products: productRes.data,
+      orders: orderRes,
+      products: productRes
     },
   };
 };

@@ -1,6 +1,7 @@
 import styles from "../../styles/Order.module.css";
 import Image from "next/image";
 import axios from "axios";
+import dbConnect from "../../util/mongo";
 
 const Order = ({order}) => {
   const status = 0;
@@ -116,9 +117,12 @@ const Order = ({order}) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const res = await axios.get(`/api/orders/${params.id}`);
+  await dbConnect()
+
+  let res = await Order.findById(params.id);
+  res = JSON.parse(JSON.stringify(res))
   return {
-    props: { order: res.data },
+    props: { order: res },
   };
 };
 
