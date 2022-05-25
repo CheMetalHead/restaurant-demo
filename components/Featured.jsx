@@ -23,7 +23,6 @@ function Featured() {
   
   return (
     <div className={styles.container}>
-      featured
       <div className={styles.arrowContainer} style={{left:0}} onClick={()=>handleArrow('l')}>
         <Image src='/arrowl.png' layout='fill' objectFit='contain'/>
       </div>

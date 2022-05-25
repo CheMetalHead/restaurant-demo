@@ -8,6 +8,7 @@ import Add from '../components/Add'
 import AddButton from '../components/AddButton'
 import { useState } from 'react'
 import Product from "../models/Product"
+import dbConnect from '../util/mongo'
 
 export default function Home({pizzaList,admin}) {
   const [close, setClose] = useState(true)
@@ -27,6 +28,7 @@ export default function Home({pizzaList,admin}) {
 }
 
 export const getServerSideProps = async (ctx) => {
+  dbConnect();
   const myCookie = ctx.req?.cookies || "";
   let admin = false;
 
@@ -34,12 +36,16 @@ export const getServerSideProps = async (ctx) => {
     admin = true;
   }
 
-//  const res = await axios.get("http://localhost:3000/api/products");
-const pizzaList = await Product.find();
+try {
+  let pizzaList = await Product.find();
+  pizzaList = JSON.parse(JSON.stringify(pizzaList))
   return {
     props: {
       pizzaList,
       admin,
     },
   };
+} catch (error) {
+  console.log(error)
+}
 };
