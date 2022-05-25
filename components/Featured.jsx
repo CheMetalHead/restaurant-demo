@@ -5,9 +5,9 @@ import Image from 'next/image'
 function Featured() {
   const [index, setIndex] = useState(0)
   const images = [
-    '/pizza1.png',
-    '/bg1.webp',
-    '/bg2.jpg'
+    'https://res.cloudinary.com/dbdwjsxda/image/upload/v1653344380/uploads/t8ztzksqyiuiy59fnfiv.png',
+    'https://res.cloudinary.com/dbdwjsxda/image/upload/v1653344380/uploads/t8ztzksqyiuiy59fnfiv.png',
+    'https://res.cloudinary.com/dbdwjsxda/image/upload/v1653344380/uploads/t8ztzksqyiuiy59fnfiv.png'
   ]
 
   const handleArrow = (direction) => {
