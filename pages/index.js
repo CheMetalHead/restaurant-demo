@@ -7,6 +7,7 @@ import axios from 'axios'
 import Add from '../components/Add'
 import AddButton from '../components/AddButton'
 import { useState } from 'react'
+import Product from "../models/Product"
 
 export default function Home({pizzaList,admin}) {
   const [close, setClose] = useState(true)
@@ -33,10 +34,11 @@ export const getServerSideProps = async (ctx) => {
     admin = true;
   }
 
-  const res = await axios.get("http://localhost:3000/api/products");
+//  const res = await axios.get("http://localhost:3000/api/products");
+const pizzaList = await Product.find();
   return {
     props: {
-      pizzaList: res.data,
+      pizzaList,
       admin,
     },
   };
