@@ -4,6 +4,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { addProduct } from '../../redux/cartSlice'
+import dbConnect from '../../util/mongo'
 
 function Product({pizza}) {
   const [size, setSize] = useState(0)
@@ -88,10 +89,11 @@ function Product({pizza}) {
 }
 
 export const getServerSideProps = async ({params}) => {
-  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`)
+  await dbConnect()
+  const pizza = await Product.findById(params.id);
   return {
     props: {
-      pizza: res.data
+      pizza
     }
   }
 }
