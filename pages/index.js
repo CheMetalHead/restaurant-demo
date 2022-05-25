@@ -28,7 +28,7 @@ export default function Home({pizzaList,admin}) {
 }
 
 export const getServerSideProps = async (ctx) => {
-  dbConnect();
+  await dbConnect();
   const myCookie = ctx.req?.cookies || "";
   let admin = false;
 
