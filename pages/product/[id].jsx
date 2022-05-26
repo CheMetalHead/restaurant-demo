@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { addProduct } from '../../redux/cartSlice'
 import dbConnect from '../../util/mongo'
+import Product from '../../models/Product'
 
 function Product({pizza}) {
   const [size, setSize] = useState(0)
