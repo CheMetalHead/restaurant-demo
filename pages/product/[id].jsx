@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { addProduct } from '../../redux/cartSlice'
 import dbConnect from '../../util/mongo'
-import Product from '../../models/Product'
+import ProductModel from '../../models/Product'
 
 function Product({pizza}) {
   const [size, setSize] = useState(0)
@@ -91,7 +91,8 @@ function Product({pizza}) {
 
 export const getServerSideProps = async ({params}) => {
   await dbConnect()
-  const pizza = await Product.findById(params.id);
+  let pizza = await ProductModel.findById(params.id);
+  pizza = JSON.parse(JSON.stringify(pizza))
   return {
     props: {
       pizza
